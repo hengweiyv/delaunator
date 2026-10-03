@@ -225,7 +225,8 @@ export default class Delaunator {
 
             // find a visible edge on the convex hull using edge hash
             let start = 0;
-            for (let j = 0, key = this._hashKey(x, y); j < this._hashSize; j++) {
+            // the circumcenter can round to a vertex, giving a NaN hash key
+            for (let j = 0, key = this._hashKey(x, y) || 0; j < this._hashSize; j++) {
                 start = hullHash[(key + j) % this._hashSize];
                 if (start !== -1 && start !== hullNext[start]) break;
             }
